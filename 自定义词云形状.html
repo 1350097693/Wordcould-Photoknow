@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		a {
+			list-style: none;
+			position: relative;
+		}
+
+		[data-zr-dom-id="zr_0"] {
+			animation: mymove 10s infinite alternate;
+		}
+
+		@keyframes mymove {
+			25% {
+
+				transform: translateY(20px);
+			}
+
+			50% {
+				transform: translateX(20px);
+
+			}
+
+			75% {
+
+				transform: translateY(-20px);
+			}
+
+			100% {
+				transform: translateX(-20px);
+
+			}
+		}
+
+		#upload_file_id {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<input class="style_file_content" type="file" onchange="changeURL(this)"
+		accept="image/png, image/jpeg, image/gif, image/jpg" id="upload_file_id" name="upload_file_id" />
+	<label for="upload_file_id" class='btn btn-success'>Choose a file</label>
+	<div id="main" style="width: 400px;height: 350px;"></div>
+	<script src="./jquery-3.1.1.min.js"></script>
+	<script src="./script.js"></script>
+	<script src="./echarts.min.js"></script>
+	<script type="text/javascript" src="./echarts-wordcloud.min.js"></script>
+
+	<script type="text/javascript">
+		//获取input的图片路径
+		function changeURL(obj) {
+			//这里可以获取上传文件的name
+			if (!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(obj.value)) {
+				alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+				return;
+			}
+			var newsrc = getObjectURL(obj.files[0]);
+			ciyun(newsrc)
+
+		}
+		//建立一個可存取到該file的url
+		function getObjectURL(file) {
+			var url = null;
+			// 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+			if (window.createObjectURL != undefined) { // basic
+				url = window.createObjectURL(file);
+			} else if (window.URL != undefined) { // mozilla(firefox)
+				url = window.URL.createObjectURL(file);
+			} else if (window.webkitURL != undefined) { // webkit or chrome
+				url = window.webkitURL.createObjectURL(file);
+			}
+
+			return url;
+		}
+		//自定义词云
+
+		var keywords = {
+			"margin": 1034,
+			"iconStyle": 2257,
+			"link": 1366,
+			"axisPointer": 5245,
+			"showDelay": 896,
+			"graph": 22194,
+			"subtext": 1442,
+			"selected": 2881,
+			"barCategoryGap": 827,
+			"barGap": 1094,
+			"barWidth": 1521,
+			"coordinateSystem": 3622,
+			"barBorderRadius": 284,
+			"z": 4014,
+			"polarIndex": 1456,
+			"shadowOffsetX": 3046,
+			"shadowColor": 3771,
+			"shadowOffsetY": 2475,
+			"height": 1988,
+			"barMinHeight": 575,
+			"lang": 131,
+			"symbolRotate": 2752,
+			"symbolOffset": 2549,
+			"showAllSymbol": 942,
+			"transitionDuration": 993,
+			"bottom": 3724,
+			"fillerColor": 229,
+			"nameMap": 1249,
+			"barMaxWidth": 747,
+			"radius": 2103,
+			"center": 2425,
+			"magicType": 3276,
+			"labelPrecision": 248,
+			"option": 654,
+			"seriesIndex": 935,
+			"controlPosition": 121,
+			"itemGap": 3188,
+			"padding": 3481,
+			"shadowStyle": 347,
+			"boxplot": 1394,
+			"labelFormatter": 264,
+			"realtime": 631,
+			"dataBackgroundColor": 239,
+			"showDetail": 247,
+			"showDataShadow": 217,
+			"x": 684,
+			"valueDim": 499,
+			"onZero": 931,
+			"right": 3255,
+			"clockwise": 1035,
+			"itemWidth": 1732,
+			"trigger": 3840,
+			"axis": 379,
+			"selectedOffset": 670,
+			"startAngle": 1293,
+			"minAngle": 590,
+			"top": 4637,
+			"avoidLabelOverlap": 870,
+			"labelLine": 3785,
+			"sankey": 2933,
+			"endAngle": 213,
+			"start": 779,
+			"roam": 1738,
+			"fontWeight": 2828,
+			"fontFamily": 2490,
+			"subtextStyle": 2066,
+			"indicator": 853,
+			"sublink": 708,
+			"zoom": 1038,
+			"subtarget": 659,
+			"length": 1060,
+			"itemSize": 505,
+			"controlStyle": 452,
+			"yAxisIndex": 2529,
+			"edgeLabel": 1188,
+			"radiusAxisIndex": 354,
+			"scaleLimit": 1313,
+			"geoIndex": 535,
+			"regions": 1892,
+			"itemHeight": 1290,
+			"nodes": 644,
+			"candlestick": 3166,
+			"crossStyle": 466,
+			"edges": 369,
+			"links": 3277,
+			"layout": 846,
+			"barBorderColor": 721,
+			"barBorderWidth": 498,
+			"treemap": 3865,
+			"y": 367,
+			"valueIndex": 704,
+			"showLegendSymbol": 482,
+			"mapValueCalculation": 492,
+			"optionToContent": 264,
+			"handleColor": 187,
+			"handleSize": 271,
+			"showContent": 1853,
+			"angleAxisIndex": 406,
+			"endValue": 327,
+			"triggerOn": 1720,
+			"contentToOption": 169,
+			"buttonColor": 71,
+			"rotate": 1144,
+			"hoverLink": 335,
+			"outOfRange": 491,
+			"textareaColor": 58,
+			"textareaBorderColor": 58,
+			"textColor": 60,
+			"buttonTextColor": 66,
+			"category": 336,
+			"hideDelay": 786,
+			"alwaysShowContent": 1267,
+			"extraCssText": 901,
+			"effectType": 277,
+			"force": 1820,
+			"rippleEffect": 723,
+			"edgeSymbolSize": 329,
+			"showEffectOn": 271,
+			"gravity": 199,
+			"edgeLength": 193,
+			"layoutAnimation": 152,
+			"length2": 169,
+			"enterable": 957,
+			"dim": 83,
+			"readOnly": 143,
+			"levels": 444,
+			"textGap": 256,
+			"pixelRatio": 84,
+			"nodeScaleRatio": 232,
+			"draggable": 249,
+			"brushType": 158,
+			"radarIndex": 152,
+			"large": 182,
+			"edgeSymbol": 675,
+			"largeThreshold": 132,
+			"leafDepth": 73,
+			"childrenVisibleMin": 73,
+			"minSize": 35,
+			"maxSize": 35,
+			"sort": 90,
+			"funnelAlign": 61,
+			"source": 336,
+			"nodeClick": 200,
+			"curveness": 350,
+			"areaSelectStyle": 104,
+			"parallelIndex": 52,
+			"initLayout": 359,
+			"trailLength": 116,
+			"boxWidth": 20,
+			"back": 53,
+			"rewind": 110,
+			"zoomToNodeRatio": 80,
+			"squareRatio": 60,
+			"parallelAxisDefault": 358,
+			"checkpointStyle": 440,
+			"nodeWidth": 49,
+			"color0": 62,
+			"layoutIterations": 56,
+			"nodeGap": 54,
+			"color(Array": 76,
+			"<string>)": 76,
+			"repulsion": 276,
+			"tiled": 105,
+			"currentIndex": 145,
+			"axisType": 227,
+			"loop": 97,
+			"playInterval": 112,
+			"borderColor0": 23,
+			"gap": 43,
+			"autoPlay": 123,
+			"showPlayBtn": 25,
+			"breadcrumb": 119,
+			"colorMappingBy": 85,
+			"id": 18,
+			"blurSize": 85,
+			"minOpacity": 50,
+			"maxOpacity": 54,
+			"prevIcon": 12,
+			"children": 21,
+			"shape": 98,
+			"nextIcon": 12,
+			"showNextBtn": 17,
+			"stopIcon": 21,
+			"visibleMin": 83,
+			"visualDimension": 97,
+			"colorSaturation": 56,
+			"colorAlpha": 66,
+			"emptyItemWidth": 10,
+			"inactiveOpacity": 4,
+			"activeOpacity": 4,
+			"showPrevBtn": 19,
+			"playIcon": 26,
+			"ellipsis": 19,
+			"gapWidth": 19,
+			"borderColorSaturation": 10,
+			"handleIcon": 2,
+			"handleStyle": 6,
+			"borderType": 1,
+			"constantSpeed": 1,
+			"polyline": 2,
+			"blendMode": 1,
+			"dataBackground": 1,
+			"textAlign": 1,
+			"textBaseline": 1,
+			"brush": 3
+		};
+
+		function ciyun(url) {
+
+
+			var data = [];
+			for (var key in keywords) {
+				data.push({
+					name: key,
+					value: Math.sqrt(keywords[key])
+				})
+			}
+			var maskImage = new Image();
+			maskImage.src = url;
+			var option = {
+				title: {
+					x: 'center',
+					textStyle: {
+						fontSize: 23
+					}
+
+				},
+				backgroundColor: '#142344',
+				series: [{
+					name: '搜索指数',
+					type: 'wordCloud',
+					//size: ['9%', '99%'],
+					sizeRange: [5, 35],
+					//textRotation: [0, 45, 90, -45],
+					rotationRange: [-45, 90],
+					//shape: 'circle',
+					maskImage: maskImage,
+					textPadding: 0,
+					autoSize: {
+						enable: true,
+						minSize: 6
+					},
+					textStyle: {
+						normal: {
+							color: function () {
+								var arr=["rgb(255,148,81)","rgb(43,255,0)","rgb(255,70,70)","rgb(95,113,252)","rgb(170,107,250)","rgb(26,255,171)","rgb(76,255,100)","rgb(255,247,135)","rgb(144,226,255)"]
+								var i=Math.round(Math.random() * 7)
+								return arr[i]
+							}
+						},
+						emphasis: {
+							shadowBlur: 10,
+							shadowColor: '#333'
+						}
+					},
+					data: data
+				}]
+			};
+			var myChart = echarts.init(document.getElementById('main'));
+			maskImage.onload = function () {
+				myChart.setOption(option);
+			};
+			window.onresize = function () {
+				myChart.resize();
+			}
+		}
+	</script>
+
+</body>
+
+</html>
